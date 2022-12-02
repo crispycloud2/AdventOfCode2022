@@ -9,8 +9,7 @@ int main(void) {
 	char elf2;
 	char throwaway;
 	int result = 0;
-	if (fp == NULL)
-	{
+	if (fp == NULL){
 		printf("file doesnt exist");
 		exit(1);
 	}
@@ -37,29 +36,26 @@ int main(void) {
 
 int pointaddup(int result, char ch){
 	switch (ch) {
-		case 'X':
+		case 'X'://rock
 			result += + 1;
 			break;
-		case 'Y':
+		case 'Y'://paper
 			result += + 2;
 			break;
-		case 'Z':
+		case 'Z'://scissors
 			result += + 3;
 			break;
 	}
 	return result;
 }
 int rockpaperscissors(int result, char elf1, char elf2) {
-	if (elf1 == 'A' && elf2 == 'X' || elf1 == 'B' && elf2 == 'Y' || elf1 == 'C' && elf2 == 'Z')
-	{
+	if (elf1 == 'A' && elf2 == 'X' || elf1 == 'B' && elf2 == 'Y' || elf1 == 'C' && elf2 == 'Z'){//tie
 		result += 3;
 	}
-	else if (elf1 == 'A' && elf2 == 'Y' || elf1 == 'B' && elf2 == 'Z' || elf1 == 'C' && elf2 == 'X')
-	{
+	else if (elf1 == 'A' && elf2 == 'Y' || elf1 == 'B' && elf2 == 'Z' || elf1 == 'C' && elf2 == 'X'){//win
 		result += 6;
 	}
-	else if (elf1 == 'A' && elf2 == 'Z' || elf1 == 'B' && elf2 == 'X' || elf1 == 'C' && elf2 == 'Y')
-	{
+	else if (elf1 == 'A' && elf2 == 'Z' || elf1 == 'B' && elf2 == 'X' || elf1 == 'C' && elf2 == 'Y'){//loss
 		result += 0;
 	}
 	return result;
