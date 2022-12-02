@@ -14,14 +14,24 @@ int main(void) {
 		printf("file doesnt exist");
 		exit(1);
 	}
-	while ((elf1 = getc(fp)) != EOF) {
+	while ((elf1 = getc(fp)) != EOF) { //part one
 		throwaway = getc(fp);
 		elf2 = getc(fp);
 		result = pointaddup(result, elf2);
 		throwaway = getc(fp);
 		result = rockpaperscissors(result, elf1, elf2);
 	}
-	printf("%d", result);
+	printf("answer part 1 %d\n", result);
+	result = 0;
+	fclose(fp);
+	fp = fopen(IN, "r");
+	while ((elf1 = getc(fp)) != EOF) {
+		throwaway = getc(fp);
+		elf2 = getc(fp);
+		result = part2(result, elf1, elf2);
+		throwaway = getc(fp);
+	}
+	printf("answer part 2 %d\n", result);
 	return 0;
 }
 
@@ -54,6 +64,41 @@ int rockpaperscissors(int result, char elf1, char elf2) {
 	}
 	return result;
 }
-//A,X=rock
-//B,Y=paper
-//C,Z=scissors
+int part2(int result, char elf1, char elf2) {
+	switch (elf2) {
+	case 'X'://loss
+		if (elf1 == 'A') {
+			result += 3;
+		}
+		else if (elf1 == 'B') {
+			result += 1;
+		}
+		else{
+			result += 2;
+		}
+		break;
+	case 'Y'://tie
+		if (elf1 == 'A') {
+			result += 3 + 1;
+		}
+		else if (elf1 == 'B') {
+			result += 3 + 2;
+		}
+		else {
+			result += 3 + 3;
+		}
+		break;
+	case 'Z'://win
+		if (elf1 == 'A') {
+			result += 6 + 2;
+		}
+		else if (elf1 == 'B') {
+			result += 6 + 3;
+		}
+		else {
+			result += 6 + 1;
+		}
+		break;
+	}
+	return result;
+}
