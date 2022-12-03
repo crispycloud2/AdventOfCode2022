@@ -3,6 +3,9 @@
 #include <string.h>
 #include <stdlib.h>
 #define IN "input.txt"
+char rucksackcompare(char[], char[], int);
+char rucksackcomparepart2(char[], char[], char[], int, int, int);
+int scorecalc(char);
 int main(void) {
 	FILE* fp = fopen(IN, "r");
 	char read[200];
@@ -12,14 +15,22 @@ int main(void) {
 	int i2 = 0;
 	char storage;
 	int j = 0;
-	int flag = 0;
-	char flagchar = 'a';
+	char item = 'a';
 	char test = 'a';
-	int score = 0;
+	int scorepart1 = 0;
+	
+	int j1 = 0;
+	int j2 = 0;
+	int n;
+	int counter = 0;
+	char read1[200];
+	char read2[200];
+	char badge;
+	int scorepart2=0;
 
 	while (fgets(read, 200, fp) != 0) {
-		for (j = 0; read[j] != '\0'; ++j);
-		for (int i = 0; i < j; i++)
+		for (j = 0; read[j] != '\0'; ++j);//calculates the size of the input string
+		for (int i = 0; i < j; i++)//splits the input string in 2
 		{
 			if (i < j/2)
 			{
@@ -30,27 +41,68 @@ int main(void) {
 				comp2[i2++] = read[i];
 			}
 		}
-		for (int x = 0; x < j / 2; x++)
+		item = rucksackcompare(comp1, comp2, j); //compares every letter of both strings with each other and returns the one matching letter
+		scorepart1 += scorecalc(item); //calculates the score based on the letter found (a-z=1-26 A-Z=27-52)
+		i1 = 0; //reset i1 and i2 for the string splitting
+		i2 = 0;
+
+		counter++; //counter to keep track of groups of 3
+		if (counter == 1) //save elf1's string
+			strcpy(read1, read), j1 = j;
+		if (counter == 2) //save elf2's string
+			strcpy(read2, read), j2 = j;
+		if (counter == 3)
 		{
-			for (int y = 0; y < j / 2; y++)
+			counter = 0;
+			badge = rucksackcomparepart2(read, read1, read2, j, j1, j2); //campares every letter of all 3 strings and returns the matching letter
+			scorepart2 += scorecalc(badge); //calculates the score based on the letter found (a-z=1-26 A-Z=27-52)
+		}
+	}
+	printf("\nanswer part 1 %d\n", scorepart1); //print output
+	printf("answer part 2 %d\n", scorepart2);
+	return 0;
+}
+
+char rucksackcompare(char comp1[], char comp2[], int j) {
+	char output='a';
+	for (int x = 0; x < j / 2; x++)
+	{
+		for (int y = 0; y < j / 2; y++)
+		{
+			if (comp1[x] == comp2[y]) {
+				output = comp2[y];
+			}
+		}
+	}
+	return output;
+}
+char rucksackcomparepart2(char string1[], char string2[], char string3[], int j1, int j2, int j3) {
+	char output = 'a';
+	for (int x = 0; x < j1-1; x++)
+	{
+		for (int y = 0; y < j2-1; y++)
+		{
+			for (int z = 0; z < j3-1; z++)
 			{
-				if (comp1[x] == comp2[y]) {
-					flagchar = comp2[y];
+				if (string3[z] == string2[y] && string3[z] == string1[x])
+				{
+					output = string1[x];
 				}
 			}
 		}
-		do
-		{
-			score++;
-			if (test == 'z'+1)
-			{
-				test = 'A';
-			}
-		} while (test++, test-1 != flagchar);
-		test = 'a';
-		i1 = 0;
-		i2 = 0;
 	}
-	printf("answer part 1 %d", score);
-	return 0;
+	return output;
+}
+int scorecalc(char letter) {
+	char test = 'a';
+	int score = 0;
+	do
+	{
+		score++;
+		if (test == 'z' + 1)
+		{
+			test = 'A';
+		}
+	} while (test++, test - 1 != letter);
+	return score;
 }
