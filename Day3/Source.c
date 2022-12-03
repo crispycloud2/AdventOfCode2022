@@ -16,12 +16,10 @@ int main(void) {
 	char storage;
 	int j = 0;
 	char item = 'a';
-	char test = 'a';
 	int scorepart1 = 0;
 	
 	int j1 = 0;
 	int j2 = 0;
-	int n;
 	int counter = 0;
 	char read1[200];
 	char read2[200];
