@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 #define IN "Input.txt"
-int main(void) {
+int man(void) {
 	FILE* fp = fopen(IN, "r");
 	char elf1;
 	char elf2;
